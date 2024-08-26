@@ -116,6 +116,8 @@ public class PlaylistReader {
         return builder.toString();
     }
     
+    // Method to retrive the spotify playlist ID by the playlist link
+
     public static String retriveSpotifyPlaylistID(String s){
 
         if (s.length() == 22) {
