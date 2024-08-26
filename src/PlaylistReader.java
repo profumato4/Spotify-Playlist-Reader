@@ -18,17 +18,16 @@ public class PlaylistReader {
 
     // The ID of the playlist to be processed
 
-    static String playlistId = "2KgR9mcs1db5eXeTlDYd9e";
-
+    static String playlistId = retriveSpotifyPlaylistID("https://open.spotify.com/playlist/4C2WM4jW5AHe8jfQIcgXb6?si=be057d51d6764500");
+                                
     public static void main(String[] args)
             throws ParseException, SpotifyWebApiException, IOException, InterruptedException {
 
         // Start a Python process to retrieve the Spotify access token
-
         ProcessBuilder processBuilder = new ProcessBuilder("python", "main.py");
         Process process = processBuilder.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-
+        
         // Read the token from the Python script output
 
         String token = reader.readLine();
@@ -115,6 +114,22 @@ public class PlaylistReader {
             builder.append(artists[i].getName());
         }
         return builder.toString();
+    }
+    
+    public static String retriveSpotifyPlaylistID(String s){
+
+        if (s.length() == 22) {
+            return s;
+        }else if (s.length() > 22) {
+
+            int lastIndex = s.lastIndexOf("/") + 1;
+            int index = s.lastIndexOf("?");
+
+            return s.substring(lastIndex, index);
+        }else{
+            return "";
+        }
+
     }
 
 }
