@@ -18,7 +18,7 @@ public class PlaylistReader {
 
     // The ID of the playlist to be processed
 
-    static String playlistId = retriveSpotifyPlaylistID("https://open.spotify.com/playlist/4C2WM4jW5AHe8jfQIcgXb6?si=be057d51d6764500");
+    static String playlistId = retriveSpotifyPlaylistID("YOUR PLAYLIST LINK");
                                 
     public static void main(String[] args)
             throws ParseException, SpotifyWebApiException, IOException, InterruptedException {
@@ -92,15 +92,26 @@ public class PlaylistReader {
             }
         }
 
+        int x = 0;
+
         // Print out tracks that are present multiple times
 
         for (Map.Entry<String, Integer> entry : trackCountMap.entrySet()) {
             String trackNameWithArtist = entry.getKey();
             int count = entry.getValue();
+
             if (count > 1) {
-                System.out.println(trackNameWithArtist + " (Presente " + count + " volte)");
+                x++;
+                System.out.println(trackNameWithArtist + " ( " + count + " times)");
+            }else{
+                
             }
         }
+
+        if (x == 0) {
+            System.out.println("There are no identical songs in the playlist");
+        }
+
     }
 
     // Helper method to format artist names
