@@ -3,8 +3,8 @@ import requests
 # Spotify API token endpoint and credentials
 
 url = "https://accounts.spotify.com/api/token"
-client_id = "aa9a2adff30e4101a80c81d4e40f26ba"      # Replace with your client ID
-client_secret = "78c6f8c81e2e4abeac108bed620a7f37"  # Replace with your client secret
+client_id = "YOUR CLIENT ID"      # Replace with your client ID
+client_secret = "YOUR CLIENT SECRET"  # Replace with your client secret
 
 # Payload for the token request
 
