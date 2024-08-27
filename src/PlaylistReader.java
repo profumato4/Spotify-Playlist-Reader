@@ -37,7 +37,6 @@ public class PlaylistReader {
         int offset = 0; // Offset for pagination
         Map<String, Integer> trackCountMap = new HashMap<>();       // Map to count track occurrences
 
-        //Thread.sleep(5000);
 
         while (true) {
 
