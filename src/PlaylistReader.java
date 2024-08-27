@@ -17,12 +17,16 @@ import se.michaelthelin.spotify.requests.data.playlists.GetPlaylistsItemsRequest
 public class PlaylistReader {
 
     // The ID of the playlist to be processed
-
-    static String playlistId = retriveSpotifyPlaylistID("YOUR PLAYLIST LINK");
+	public static String link = "";
+    
                                 
-    public static void main(String[] args)
+    public static void main()
             throws ParseException, SpotifyWebApiException, IOException, InterruptedException {
-
+    	
+    	
+    	System.out.println(link);
+    	String playlistId = retriveSpotifyPlaylistID(link);
+    	
         // Start a Python process to retrieve the Spotify access token
         ProcessBuilder processBuilder = new ProcessBuilder("python", "main.py");
         Process process = processBuilder.start();
