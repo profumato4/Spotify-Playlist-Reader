@@ -2,7 +2,10 @@ package main;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.hc.core5.http.ParseException;
@@ -21,11 +24,11 @@ public class PlaylistReader {
 	public static String link = "";
     
                                 
-    public static void readPlaylist()
+    public static List<TrackData> readPlaylist()
             throws ParseException, SpotifyWebApiException, IOException, InterruptedException {
     	
+    	List<TrackData> trackList = new ArrayList<>(); // List to store track data
     	
-    	System.out.println(link);
     	String playlistId = retriveSpotifyPlaylistID(link);
     	
         // Start a Python process to retrieve the Spotify access token
@@ -96,26 +99,19 @@ public class PlaylistReader {
             }
         }
 
-        int x = 0;
 
-        // Print out tracks that are present multiple times
 
         for (Map.Entry<String, Integer> entry : trackCountMap.entrySet()) {
-            String trackNameWithArtist = entry.getKey();
+            String[] parts = entry.getKey().split(" - ");
+            String trackName = parts[0];
+            String artistNames = parts.length > 1 ? parts[1] : "Unknown Artist";
             int count = entry.getValue();
 
-            if (count > 1) {
-                x++;
-                System.out.println(trackNameWithArtist + " ( " + count + " times)");
-            }else{
-                
-            }
+            trackList.add(new TrackData(trackName, artistNames, count));  // Add track data to the list
         }
 
-        if (x == 0) {
-            System.out.println("There are no identical songs in the playlist");
-        }
-
+        return trackList;
+        
     }
 
     // Helper method to format artist names

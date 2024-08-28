@@ -4,6 +4,8 @@ import javax.swing.JPanel;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
+
+import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
@@ -12,10 +14,13 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import org.apache.hc.core5.http.ParseException;
 
 import main.PlaylistReader;
+import main.TrackData;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
 
 import java.awt.event.ActionListener;
 import java.io.IOException;
+import java.util.AbstractMap.SimpleEntry;
+import java.util.List;
 import java.awt.event.ActionEvent;
 
 
@@ -24,6 +29,7 @@ public class MainPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
+	private TablePanel panel;
 
 	/**
 	 * Create the panel.
@@ -43,14 +49,17 @@ public class MainPanel extends JPanel {
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PlaylistReader.link = textField.getText();
+				textField.setText("");
 				removeAll();
-				repaint();
 				try {
-					PlaylistReader.readPlaylist();
+					List<TrackData> trackData = PlaylistReader.readPlaylist();
+                    panel = new TablePanel(trackData);  // Pass the data to the TablePanel
 				} catch (ParseException | SpotifyWebApiException | IOException | InterruptedException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				add(panel, BorderLayout.CENTER);
+				revalidate();
+                repaint();
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 25));
