@@ -9,6 +9,15 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
+import org.apache.hc.core5.http.ParseException;
+
+import main.PlaylistReader;
+import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
+
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.awt.event.ActionEvent;
+
 
 
 public class MainPanel extends JPanel {
@@ -31,6 +40,19 @@ public class MainPanel extends JPanel {
 		textField.setColumns(10);
 		
 		JButton btnNewButton = new JButton("Done");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				PlaylistReader.link = textField.getText();
+				removeAll();
+				repaint();
+				try {
+					PlaylistReader.readPlaylist();
+				} catch (ParseException | SpotifyWebApiException | IOException | InterruptedException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
