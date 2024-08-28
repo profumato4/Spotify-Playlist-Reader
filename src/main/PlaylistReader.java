@@ -1,3 +1,4 @@
+package main;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -20,7 +21,7 @@ public class PlaylistReader {
 	public static String link = "";
     
                                 
-    public static void main()
+    public static void readPlaylist()
             throws ParseException, SpotifyWebApiException, IOException, InterruptedException {
     	
     	
@@ -50,10 +51,10 @@ public class PlaylistReader {
 
             // Build a request to retrieve playlist items with a limit and offset
 
-            GetPlaylistsItemsRequest getPlaylistRequest = api.getPlaylistsItems(playlistId).limit(1).offset(offset)
+            GetPlaylistsItemsRequest getPlaylistRequest = api.getPlaylistsItems(playlistId).limit(100).offset(offset)
                     .build();
 
-            offset += 1;
+            offset += 100;
 
             try {
 
