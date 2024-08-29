@@ -50,19 +50,24 @@ public class MainPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				PlaylistReader.link = textField.getText();
 				textField.setText("");
-				removeAll();
+				remove(lblNewLabel);
+				remove(textField);
+				remove(btnNewButton);
 				try {
-					List<TrackData> trackData = PlaylistReader.readPlaylist();
-                    panel = new TablePanel(trackData);  // Pass the data to the TablePanel
+					TablePanel.trackData = PlaylistReader.readPlaylist();
+                    panel.setVisible(true);
+                    panel.createTable();
 				} catch (ParseException | SpotifyWebApiException | IOException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
-				add(panel, BorderLayout.CENTER);
 				revalidate();
                 repaint();
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		
+		panel = new TablePanel();
+		panel.setVisible(false);
 		GroupLayout groupLayout = new GroupLayout(this);
 		groupLayout.setHorizontalGroup(
 			groupLayout.createParallelGroup(Alignment.TRAILING)
@@ -78,17 +83,19 @@ public class MainPanel extends JPanel {
 					.addGap(342)
 					.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
 					.addGap(334))
+				.addComponent(panel, GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE)
 		);
 		groupLayout.setVerticalGroup(
 			groupLayout.createParallelGroup(Alignment.LEADING)
-				.addGroup(groupLayout.createSequentialGroup()
-					.addGap(98)
+				.addGroup(Alignment.TRAILING, groupLayout.createSequentialGroup()
+					.addComponent(panel, GroupLayout.DEFAULT_SIZE, 492, Short.MAX_VALUE)
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(lblNewLabel, GroupLayout.PREFERRED_SIZE, 50, GroupLayout.PREFERRED_SIZE)
 					.addGap(53)
 					.addComponent(textField, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
 					.addGap(49)
 					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(162, Short.MAX_VALUE))
+					.addGap(0))
 		);
 		setLayout(groupLayout);
 		

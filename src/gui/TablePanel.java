@@ -3,25 +3,32 @@ package gui;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
 import main.TrackData;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.util.List;
 
 public class TablePanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
     private JTable table;
+    static List<TrackData> trackData;
 
-    public TablePanel(List<TrackData> trackData) {
+    public TablePanel() {
         setSize(823, 491);
-
-        // Column names for the table
+        setLayout(new BorderLayout());
+        
+    }
+    
+    public void createTable() {
+        
         String[] columnNames = { "Track", "Artist(s)", "Occurrences" };
 
-        // Data for the table, overriding DefaultTableModel to make it non-editable
         DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
             /**
 			 * 
@@ -34,18 +41,21 @@ public class TablePanel extends JPanel {
             }
         };
 
-        // Populate the model with track data
+       
         for (TrackData data : trackData) {
             Object[] row = { data.getTrackName(), data.getArtistNames(), data.getOccurrence() };
             model.addRow(row);
         }
 
-        // Initialize the table with the non-editable model
         table = new JTable(model);
+        Font currentFont = table.getFont();
+        Font newFont = currentFont.deriveFont(currentFont.getSize() + 2f);  
+        table.setFont(newFont);
+        table.setPreferredScrollableViewportSize(new Dimension(823, 491)); 
+        
         JScrollPane scrollPane = new JScrollPane(table);
 
-        // Add the scrollPane containing the table to the panel
-        setLayout(new BorderLayout());
         add(scrollPane, BorderLayout.CENTER);
     }
+    
 }
