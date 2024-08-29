@@ -1,4 +1,5 @@
 package main;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -8,8 +9,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
+
 import org.apache.hc.core5.http.ParseException;
 
+import gui.App;
 import se.michaelthelin.spotify.SpotifyApi;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
 import se.michaelthelin.spotify.model_objects.specification.ArtistSimplified;
@@ -20,129 +24,132 @@ import se.michaelthelin.spotify.requests.data.playlists.GetPlaylistsItemsRequest
 
 public class PlaylistReader {
 
-    // The ID of the playlist to be processed
+	// The ID of the playlist to be processed
 	public static String link = "";
-    
-                                
-    public static List<TrackData> readPlaylist()
-            throws ParseException, SpotifyWebApiException, IOException, InterruptedException {
-    	
-    	List<TrackData> trackList = new ArrayList<>(); // List to store track data
-    	
-    	String playlistId = retriveSpotifyPlaylistID(link);
-    	
-        // Start a Python process to retrieve the Spotify access token
-        ProcessBuilder processBuilder = new ProcessBuilder("python", "main.py");
-        Process process = processBuilder.start();
-        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-        
-        // Read the token from the Python script output
+	public static String playlistId;
 
-        String token = reader.readLine();
-        System.out.println(token);  // Debugging: print the token to verify it isn't null
-        reader.close();
+	public static List<TrackData> readPlaylist()
+			throws ParseException, SpotifyWebApiException, IOException, InterruptedException {
 
-        int offset = 0; // Offset for pagination
-        Map<String, Integer> trackCountMap = new HashMap<>();       // Map to count track occurrences
+		List<TrackData> trackList = new ArrayList<>(); // List to store track data
 
+		playlistId = retriveSpotifyPlaylistID(link);
 
-        while (true) {
+		if (!playlistId.isEmpty()) {
+			// Start a Python process to retrieve the Spotify access token
+			ProcessBuilder processBuilder = new ProcessBuilder("python", "main.py");
+			Process process = processBuilder.start();
+			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
-            // Initialize Spotify API with the access token
+			// Read the token from the Python script output
 
-            SpotifyApi api = new SpotifyApi.Builder().setAccessToken(token).build();
+			String token = reader.readLine();
+			System.out.println(token); // Debugging: print the token to verify it isn't null
+			reader.close();
 
-            // Build a request to retrieve playlist items with a limit and offset
+			int offset = 0; // Offset for pagination
+			Map<String, Integer> trackCountMap = new HashMap<>(); // Map to count track occurrences
 
-            GetPlaylistsItemsRequest getPlaylistRequest = api.getPlaylistsItems(playlistId).limit(100).offset(offset)
-                    .build();
+			while (true) {
 
-            offset += 100;
+				// Initialize Spotify API with the access token
 
-            try {
+				SpotifyApi api = new SpotifyApi.Builder().setAccessToken(token).build();
 
-                // Execute the request to get playlist items
+				// Build a request to retrieve playlist items with a limit and offset
 
-                Paging<PlaylistTrack> playlistTrackPaging = getPlaylistRequest.execute();
-                PlaylistTrack[] items = playlistTrackPaging.getItems();
+				GetPlaylistsItemsRequest getPlaylistRequest = api.getPlaylistsItems(playlistId).limit(100)
+						.offset(offset).build();
 
-                if(items.length == 0){
-                    break;
-                }
+				offset += 100;
 
-                // Process each track in the response
+				try {
 
-                for (int i = 0; i < items.length; i++) {
+					// Execute the request to get playlist items
 
-                    Track track = (Track) items[i].getTrack();          // Get track details
-                    String trackName = track.getName();                 // Get track name
-                    ArtistSimplified[] artists = track.getArtists();    // Get track artists
-                    String artistNames = getArtistsNames(artists);      // Format artist names
-                    String trackKey = trackName + " - " + artistNames;  // Unique key for track
+					Paging<PlaylistTrack> playlistTrackPaging = getPlaylistRequest.execute();
+					PlaylistTrack[] items = playlistTrackPaging.getItems();
 
-                    // Update the track occurrence count in the map
+					if (items.length == 0) {
+						break;
+					}
 
-                    if (trackCountMap.containsKey(trackKey)) {
-                        int count = trackCountMap.get(trackKey);
-                        trackCountMap.put(trackKey, count + 1);
-                    } else {
-                        trackCountMap.put(trackKey, 1);
-                    }
-                }
+					// Process each track in the response
 
-            } catch (ParseException e) {
-                e.printStackTrace();
-            } catch (SpotifyWebApiException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+					for (int i = 0; i < items.length; i++) {
 
+						Track track = (Track) items[i].getTrack(); // Get track details
+						String trackName = track.getName(); // Get track name
+						ArtistSimplified[] artists = track.getArtists(); // Get track artists
+						String artistNames = getArtistsNames(artists); // Format artist names
+						String trackKey = trackName + " - " + artistNames; // Unique key for track
 
+						// Update the track occurrence count in the map
 
-        for (Map.Entry<String, Integer> entry : trackCountMap.entrySet()) {
-            String[] parts = entry.getKey().split(" - ");
-            String trackName = parts[0];
-            String artistNames = parts.length > 1 ? parts[1] : "Unknown Artist";
-            int count = entry.getValue();
+						if (trackCountMap.containsKey(trackKey)) {
+							int count = trackCountMap.get(trackKey);
+							trackCountMap.put(trackKey, count + 1);
+						} else {
+							trackCountMap.put(trackKey, 1);
+						}
+					}
 
-            trackList.add(new TrackData(trackName, artistNames, count));  // Add track data to the list
-        }
+				} catch (ParseException e) {
+					e.printStackTrace();
+				} catch (SpotifyWebApiException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 
-        return trackList;
-        
-    }
+			for (Map.Entry<String, Integer> entry : trackCountMap.entrySet()) {
+				String[] parts = entry.getKey().split(" - ");
+				String trackName = parts[0];
+				String artistNames = parts.length > 1 ? parts[1] : "Unknown Artist";
+				int count = entry.getValue();
 
-    // Helper method to format artist names
+				trackList.add(new TrackData(trackName, artistNames, count)); // Add track data to the list
+			}
 
-    private static String getArtistsNames(ArtistSimplified[] artists) {
-        StringBuilder builder = new StringBuilder();
-        for (int i = 0; i < artists.length; i++) {
-            if (i > 0) {
-                builder.append(", ");
-            }
-            builder.append(artists[i].getName());
-        }
-        return builder.toString();
-    }
-    
-    // Method to retrive the spotify playlist ID by the playlist link
+			return trackList;
+		}else {
+			JOptionPane.showMessageDialog(App.frame, "Insert a valid spotify playlist link", "Invalid link",
+					JOptionPane.ERROR_MESSAGE);
+		}
+		return trackList;
 
-    public static String retriveSpotifyPlaylistID(String s){
+	}
 
-        if (s.length() == 22) {
-            return s;
-        }else if (s.length() > 22) {
+	// Helper method to format artist names
 
-            int lastIndex = s.lastIndexOf("/") + 1;
-            int index = s.lastIndexOf("?");
+	private static String getArtistsNames(ArtistSimplified[] artists) {
+		StringBuilder builder = new StringBuilder();
+		for (int i = 0; i < artists.length; i++) {
+			if (i > 0) {
+				builder.append(", ");
+			}
+			builder.append(artists[i].getName());
+		}
+		return builder.toString();
+	}
 
-            return s.substring(lastIndex, index);
-        }else{
-            return "";
-        }
+	// Method to retrive the spotify playlist ID by the playlist link
 
-    }
+	public static String retriveSpotifyPlaylistID(String s) {
+		
+		
+		if (s.length() == 22 && SpotifyPlaylistChecker.isSpotifyPlaylistId(s)) {
+			return s;
+		} else if (s.length() > 22 && SpotifyPlaylistChecker.isSpotifyPlaylist(s)) {
+
+			int lastIndex = s.lastIndexOf("/") + 1;
+			int index = s.lastIndexOf("?");
+
+			return s.substring(lastIndex, index);
+		} else {
+			return "";
+		}
+	}
 
 }

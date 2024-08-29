@@ -32,7 +32,7 @@ public class MainPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private TablePanel panel;
-	static JButton done;
+	private JButton done;
 
 	/**
 	 * Create the panel.
@@ -55,13 +55,15 @@ public class MainPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				PlaylistReader.link = textField.getText();
 				textField.setText("");
-				remove(lblNewLabel);
-				remove(textField);
-				remove(done);
 				try {
 					TablePanel.trackData = PlaylistReader.readPlaylist();
-                    panel.setVisible(true);
-                    panel.createTable();
+					if(!PlaylistReader.playlistId.isEmpty()) {
+						remove(lblNewLabel);
+						remove(textField);
+						remove(done);
+						panel.setVisible(true);
+	                    panel.createTable();
+					}
 				} catch (ParseException | SpotifyWebApiException | IOException | InterruptedException e1) {
 					e1.printStackTrace();
 				}
@@ -121,7 +123,6 @@ public class MainPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				done.doClick();
-				done.requestFocusInWindow();
 			}
 		});
 	}
