@@ -2,8 +2,7 @@ package gui;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.UIManager;
+import org.jdesktop.swingx.JXTable;  
 import javax.swing.table.DefaultTableModel;
 
 import main.TrackData;
@@ -16,13 +15,12 @@ import java.util.List;
 public class TablePanel extends JPanel {
 
     private static final long serialVersionUID = 1L;
-    private JTable table;
+    private JXTable table;  
     static List<TrackData> trackData;
 
     public TablePanel() {
         setSize(823, 491);
         setLayout(new BorderLayout());
-        
     }
     
     public void createTable() {
@@ -30,24 +28,22 @@ public class TablePanel extends JPanel {
         String[] columnNames = { "Track", "Artist(s)", "Occurrences" };
 
         DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
-            /**
-			 * 
-			 */
-			private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-			@Override
+            @Override
             public boolean isCellEditable(int row, int column) {
                 return false;  // All cells are non-editable
             }
         };
 
-       
         for (TrackData data : trackData) {
             Object[] row = { data.getTrackName(), data.getArtistNames(), data.getOccurrence() };
             model.addRow(row);
         }
 
-        table = new JTable(model);
+        table = new JXTable(model);  
+        table.setSortable(true);  
+
         Font currentFont = table.getFont();
         Font newFont = currentFont.deriveFont(currentFont.getSize() + 2f);  
         table.setFont(newFont);
@@ -57,5 +53,4 @@ public class TablePanel extends JPanel {
 
         add(scrollPane, BorderLayout.CENTER);
     }
-    
 }
