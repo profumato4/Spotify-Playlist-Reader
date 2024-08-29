@@ -1,26 +1,28 @@
 package gui;
 
 import javax.swing.JPanel;
+import javax.swing.AbstractAction;
+import javax.swing.ActionMap;
 import javax.swing.GroupLayout;
+import javax.swing.InputMap;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JLabel;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.KeyStroke;
 import javax.swing.JButton;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
 import org.apache.hc.core5.http.ParseException;
 
 import main.PlaylistReader;
-import main.TrackData;
 import se.michaelthelin.spotify.exceptions.SpotifyWebApiException;
 
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.io.IOException;
-import java.util.AbstractMap.SimpleEntry;
-import java.util.List;
 import java.awt.event.ActionEvent;
 
 
@@ -30,6 +32,7 @@ public class MainPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField textField;
 	private TablePanel panel;
+	static JButton done;
 
 	/**
 	 * Create the panel.
@@ -38,6 +41,8 @@ public class MainPanel extends JPanel {
 		
 		setSize(823,491);
 		
+		keyBindings();
+		
 		JLabel lblNewLabel = new JLabel("Insert the spotify playlist link");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		
@@ -45,14 +50,14 @@ public class MainPanel extends JPanel {
 		textField.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		textField.setColumns(10);
 		
-		JButton btnNewButton = new JButton("Done");
-		btnNewButton.addActionListener(new ActionListener() {
+		done  = new JButton("Done");
+		done.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				PlaylistReader.link = textField.getText();
 				textField.setText("");
 				remove(lblNewLabel);
 				remove(textField);
-				remove(btnNewButton);
+				remove(done);
 				try {
 					TablePanel.trackData = PlaylistReader.readPlaylist();
                     panel.setVisible(true);
@@ -64,7 +69,7 @@ public class MainPanel extends JPanel {
                 repaint();
 			}
 		});
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 25));
+		done.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		
 		panel = new TablePanel();
 		panel.setVisible(false);
@@ -81,7 +86,7 @@ public class MainPanel extends JPanel {
 					.addGap(186))
 				.addGroup(groupLayout.createSequentialGroup()
 					.addGap(342)
-					.addComponent(btnNewButton, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
+					.addComponent(done, GroupLayout.DEFAULT_SIZE, 147, Short.MAX_VALUE)
 					.addGap(334))
 				.addComponent(panel, GroupLayout.DEFAULT_SIZE, 823, Short.MAX_VALUE)
 		);
@@ -94,10 +99,32 @@ public class MainPanel extends JPanel {
 					.addGap(53)
 					.addComponent(textField, GroupLayout.PREFERRED_SIZE, 43, GroupLayout.PREFERRED_SIZE)
 					.addGap(49)
-					.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
+					.addComponent(done, GroupLayout.PREFERRED_SIZE, 36, GroupLayout.PREFERRED_SIZE)
 					.addGap(0))
 		);
 		setLayout(groupLayout);
 		
 	}
+	
+	public void keyBindings() {
+		InputMap inputMap = this.getInputMap(JPanel.WHEN_IN_FOCUSED_WINDOW);
+		ActionMap actionMap = this.getActionMap();
+
+		inputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_ENTER, 0), "enter");
+
+		actionMap.put("enter", new AbstractAction() {
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				done.doClick();
+				done.requestFocusInWindow();
+			}
+		});
+	}
+	
+	
 }

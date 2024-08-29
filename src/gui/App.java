@@ -27,7 +27,7 @@ public class App {
 					UIManager.put("Button.arc", 20);
 					App window = new App();
 					window.frame.setVisible(true);
-					
+					MainPanel.done.requestFocusInWindow();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
