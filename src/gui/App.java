@@ -8,6 +8,11 @@ import javax.swing.UIManager;
 
 
 import com.formdev.flatlaf.FlatDarkLaf;
+import javax.swing.JMenuBar;
+import javax.swing.JMenu;
+import javax.swing.JMenuItem;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class App {
@@ -51,7 +56,21 @@ public class App {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		panel = new MainPanel();
-		frame.add(panel, BorderLayout.CENTER);
+		frame.getContentPane().add(panel, BorderLayout.CENTER);
+		
+		JMenuBar menuBar = new JMenuBar();
+		frame.setJMenuBar(menuBar);
+		
+		JMenu optionMenu = new JMenu("Option");
+		menuBar.add(optionMenu);
+		
+		JMenuItem back = new JMenuItem("Go Back to Main Menu");
+		back.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		optionMenu.add(back);
 		
 	}
 
