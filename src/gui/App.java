@@ -58,19 +58,6 @@ public class App {
 		panel = new MainPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
 		
-		JMenuBar menuBar = new JMenuBar();
-		frame.setJMenuBar(menuBar);
-		
-		JMenu optionMenu = new JMenu("Option");
-		menuBar.add(optionMenu);
-		
-		JMenuItem back = new JMenuItem("Go Back to Main Menu");
-		back.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		optionMenu.add(back);
 		
 	}
 

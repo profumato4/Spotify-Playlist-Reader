@@ -61,6 +61,7 @@ public class MainPanel extends JPanel {
 						remove(lblNewLabel);
 						remove(textField);
 						remove(done);
+						MenuBuilder.createMenu();
 						panel.setVisible(true);
 	                    panel.createTable();
 					}
