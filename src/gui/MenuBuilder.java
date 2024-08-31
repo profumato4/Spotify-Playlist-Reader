@@ -31,7 +31,11 @@ public class MenuBuilder {
 		JMenuItem back = new JMenuItem("Go Back to Main Menu");
 		back.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				MainPanel.panel.setVisible(false);
+				MainPanel.done.setVisible(true);
+				MainPanel.lblNewLabel.setVisible(true);
+				MainPanel.textField.setVisible(true);
+				menuBar.setVisible(false);
 			}
 		});
 		optionMenu.add(back);

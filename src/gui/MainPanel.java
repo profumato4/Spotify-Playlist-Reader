@@ -30,9 +30,10 @@ import java.awt.event.ActionEvent;
 public class MainPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
-	private TablePanel panel;
-	private JButton done;
+	public static JTextField textField;
+	public static TablePanel panel;
+	public static JButton done;
+	public static JLabel lblNewLabel;
 
 	/**
 	 * Create the panel.
@@ -43,7 +44,7 @@ public class MainPanel extends JPanel {
 		
 		keyBindings();
 		
-		JLabel lblNewLabel = new JLabel("Insert the spotify playlist link");
+		lblNewLabel = new JLabel("Insert the spotify playlist link");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		
 		textField = new JTextField();
@@ -58,9 +59,9 @@ public class MainPanel extends JPanel {
 				try {
 					TablePanel.trackData = PlaylistReader.readPlaylist();
 					if(!PlaylistReader.playlistId.isEmpty()) {
-						remove(lblNewLabel);
-						remove(textField);
-						remove(done);
+						lblNewLabel.setVisible(false);
+						textField.setVisible(false);
+						done.setVisible(false);
 						MenuBuilder.createMenu();
 						panel.setVisible(true);
 	                    panel.createTable();
