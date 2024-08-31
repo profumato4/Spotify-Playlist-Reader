@@ -27,13 +27,16 @@ public class PlaylistReader {
 	// The ID of the playlist to be processed
 	public static String link = "";
 	public static String playlistId;
-
+	
+	public static void playlistID() {
+		playlistId = retriveSpotifyPlaylistID(link);
+	}
+	
 	public static List<TrackData> readPlaylist()
 			throws ParseException, SpotifyWebApiException, IOException, InterruptedException {
 
 		List<TrackData> trackList = new ArrayList<>(); // List to store track data
 
-		playlistId = retriveSpotifyPlaylistID(link);
 
 		if (!playlistId.isEmpty()) {
 			// Start a Python process to retrieve the Spotify access token
@@ -113,9 +116,6 @@ public class PlaylistReader {
 			}
 
 			return trackList;
-		}else {
-			JOptionPane.showMessageDialog(App.frame, "Insert a valid spotify playlist link", "Invalid link",
-					JOptionPane.ERROR_MESSAGE);
 		}
 		return trackList;
 
