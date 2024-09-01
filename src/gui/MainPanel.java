@@ -1,4 +1,3 @@
-// Classe MainPanel modificata per includere il pannello di caricamento
 package gui;
 
 import javax.swing.JPanel;
@@ -8,9 +7,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.InputMap;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
+import javax.swing.JOptionPane;import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.JButton;
