@@ -28,6 +28,14 @@ public class MenuBuilder {
 		JMenu optionMenu = new JMenu("Option");
 		menuBar.add(optionMenu);
 		
+		JMenuItem settings = new JMenuItem("Settings");
+		settings.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		optionMenu.add(settings);
+		
 		JMenuItem back = new JMenuItem("Go Back to Main Menu");
 		back.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
