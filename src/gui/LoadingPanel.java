@@ -24,7 +24,7 @@ public class LoadingPanel extends JPanel {
     private boolean flip = false;
 
     public LoadingPanel() {
-        setBackground(new Color(60,63,65));
+        setBackground(new Color(60, 63, 65));
         Timer timer = new Timer(10, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -47,7 +47,7 @@ public class LoadingPanel extends JPanel {
 
     @Override
     public Dimension getPreferredSize() {
-        return new Dimension(200, 200);
+        return new Dimension(400, 400); 
     }
 
     @Override
@@ -63,8 +63,12 @@ public class LoadingPanel extends JPanel {
         g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
         g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
 
-        Arc2D.Double arc = new Arc2D.Double(50, 50, 100, 100, angle, extent, Arc2D.OPEN);
-        BasicStroke stroke = new BasicStroke(4, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND);
+        int diameter = Math.min(getWidth(), getHeight()) / 2; 
+        int x = (getWidth() - diameter) / 2; 
+        int y = (getHeight() - diameter) / 2;
+
+        Arc2D.Double arc = new Arc2D.Double(x, y, diameter, diameter, angle, extent, Arc2D.OPEN);
+        BasicStroke stroke = new BasicStroke(6, BasicStroke.CAP_BUTT, BasicStroke.JOIN_ROUND); 
         g2d.setStroke(stroke);
         g2d.setColor(Color.WHITE);
         g2d.draw(arc);
