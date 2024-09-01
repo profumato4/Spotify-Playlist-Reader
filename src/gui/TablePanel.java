@@ -1,16 +1,19 @@
 package gui;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import org.jdesktop.swingx.JXTable;  
-import javax.swing.table.DefaultTableModel;
-
-import main.TrackData;
-
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.List;
+
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+
+import org.jdesktop.swingx.JXTable;
+
+import main.TrackData;
 
 public class TablePanel extends JPanel {
 
@@ -21,6 +24,14 @@ public class TablePanel extends JPanel {
     public TablePanel() {
         setSize(823, 491);
         setLayout(new BorderLayout());
+        
+        UIManager.put("Table.background", new Color(60, 63, 65));            
+        UIManager.put("Table.foreground", Color.WHITE);                 
+  /*    UIManager.put("Table.selectionBackground", Color.BLUE);        
+        UIManager.put("Table.selectionForeground", Color.WHITE);        
+        UIManager.put("Table.gridColor", Color.GRAY);                  
+        UIManager.put("Table.alternateRowColor", Color.WHITE); 
+    */    
     }
     
     public void createTable() {

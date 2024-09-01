@@ -7,7 +7,10 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.InputMap;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;import java.awt.Font;
+import javax.swing.JOptionPane;
+
+import java.awt.Color;
+import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.JButton;
@@ -43,10 +46,12 @@ public class MainPanel extends JPanel {
         
         lblNewLabel = new JLabel("Insert the spotify playlist link");
         lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 25));
+        lblNewLabel.setForeground(Color.WHITE);
 
         textField = new JTextField();
         textField.setFont(new Font("Tahoma", Font.PLAIN, 25));
         textField.setColumns(10);
+        textField.setForeground(Color.WHITE);
 
         done  = new JButton("Done");
         done.addActionListener(new ActionListener() {
@@ -65,7 +70,6 @@ public class MainPanel extends JPanel {
                             done.setVisible(false);
                             TablePanel.trackData = PlaylistReader.readPlaylist();
 
-                            MenuBuilder.createMenu();
                             panel.setVisible(true);
                             panel.createTable();
                         }else {
@@ -84,6 +88,7 @@ public class MainPanel extends JPanel {
             }
         });
         done.setFont(new Font("Tahoma", Font.PLAIN, 25));
+        done.setForeground(Color.WHITE);
 
         panel = new TablePanel();
         panel.setVisible(false);

@@ -14,13 +14,13 @@ public class MenuBuilder {
 	public static void createMenu() {
 		
 		UIManager.put("MenuBar.background", Color.BLACK);
-		UIManager.put("MenuBar.foreground", Color.ORANGE);
+		UIManager.put("MenuBar.foreground", Color.WHITE);
 		UIManager.put("Menu.background", Color.BLACK);
-		UIManager.put("Menu.foreground", Color.ORANGE);
+		UIManager.put("Menu.foreground", Color.WHITE);
 		UIManager.put("MenuItem.background", Color.BLACK);
-		UIManager.put("MenuItem.foreground", Color.ORANGE);
-		UIManager.put("Separator.foreground", Color.ORANGE);
-		UIManager.put("Separator.background", Color.ORANGE);
+		UIManager.put("MenuItem.foreground", Color.WHITE);
+		UIManager.put("Separator.foreground", Color.WHITE);
+		UIManager.put("Separator.background", Color.WHITE);
 		
 		JMenuBar menuBar = new JMenuBar();
 		App.frame.setJMenuBar(menuBar);
@@ -35,7 +35,6 @@ public class MenuBuilder {
 				MainPanel.done.setVisible(true);
 				MainPanel.lblNewLabel.setVisible(true);
 				MainPanel.textField.setVisible(true);
-				menuBar.setVisible(false);
 			}
 		});
 		optionMenu.add(back);

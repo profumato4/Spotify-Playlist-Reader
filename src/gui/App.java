@@ -53,7 +53,7 @@ public class App {
 		
 		panel = new MainPanel();
 		frame.getContentPane().add(panel, BorderLayout.CENTER);
-		
+		MenuBuilder.createMenu();
 		
 	}
 
