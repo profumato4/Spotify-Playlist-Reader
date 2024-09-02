@@ -16,7 +16,7 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
 public class MenuBuilder {
-    
+
     public static void createMenu() {
         
         UIManager.put("MenuBar.background", Color.BLACK);
@@ -62,10 +62,12 @@ public class MenuBuilder {
         GroupLayout layout = new GroupLayout(checkBoxPanel);
         checkBoxPanel.setLayout(layout);
         
+        boolean[] columnVisibility = MainPanel.panel.getColumnVisibility();
+
         JCheckBox[] checkBoxes = new JCheckBox[3];
-        checkBoxes[0] = new JCheckBox("Track", true);
-        checkBoxes[1] = new JCheckBox("Artist(s)", true);
-        checkBoxes[2] = new JCheckBox("Occurrences", true);
+        checkBoxes[0] = new JCheckBox("Track", columnVisibility[0]);
+        checkBoxes[1] = new JCheckBox("Artist(s)", columnVisibility[1]);
+        checkBoxes[2] = new JCheckBox("Occurrences", columnVisibility[2]);
         
         layout.setHorizontalGroup(
             layout.createParallelGroup(Alignment.LEADING)
@@ -88,11 +90,11 @@ public class MenuBuilder {
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean[] columnVisibility = new boolean[3];
+                boolean[] newColumnVisibility = new boolean[3];
                 for (int i = 0; i < checkBoxes.length; i++) {
-                    columnVisibility[i] = checkBoxes[i].isSelected();
+                    newColumnVisibility[i] = checkBoxes[i].isSelected();
                 }
-                MainPanel.panel.updateColumnVisibility(columnVisibility);
+                MainPanel.panel.updateColumnVisibility(newColumnVisibility);
                 dialog.dispose();
             }
         });

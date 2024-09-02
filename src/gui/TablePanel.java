@@ -17,6 +17,8 @@ public class TablePanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private JXTable table;  
     static List<TrackData> trackData;
+    
+    private boolean[] columnVisibility = { true, true, true }; 
 
     public TablePanel() {
         setSize(823, 491);
@@ -55,13 +57,20 @@ public class TablePanel extends JPanel {
         JScrollPane scrollPane = new JScrollPane(table);
 
         add(scrollPane, BorderLayout.CENTER);
+
+        updateColumnVisibility(columnVisibility);
     }
 
     public void updateColumnVisibility(boolean[] columnVisibility) {
+        this.columnVisibility = columnVisibility; 
         for (int i = 0; i < columnVisibility.length; i++) {
             table.getColumnModel().getColumn(i).setMinWidth(columnVisibility[i] ? 15 : 0);
             table.getColumnModel().getColumn(i).setMaxWidth(columnVisibility[i] ? Integer.MAX_VALUE : 0);
             table.getColumnModel().getColumn(i).setPreferredWidth(columnVisibility[i] ? 100 : 0);
         }
+    }
+
+    public boolean[] getColumnVisibility() {
+        return columnVisibility;
     }
 }
