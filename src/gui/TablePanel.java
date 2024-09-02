@@ -5,14 +5,11 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.List;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
-
 import org.jdesktop.swingx.JXTable;
-
 import main.TrackData;
 
 public class TablePanel extends JPanel {
@@ -27,11 +24,6 @@ public class TablePanel extends JPanel {
         
         UIManager.put("Table.background", new Color(60, 63, 65));            
         UIManager.put("Table.foreground", Color.WHITE);                 
-  /*    UIManager.put("Table.selectionBackground", Color.BLUE);        
-        UIManager.put("Table.selectionForeground", Color.WHITE);        
-        UIManager.put("Table.gridColor", Color.GRAY);                  
-        UIManager.put("Table.alternateRowColor", Color.WHITE); 
-    */    
     }
     
     public void createTable() {
@@ -63,5 +55,13 @@ public class TablePanel extends JPanel {
         JScrollPane scrollPane = new JScrollPane(table);
 
         add(scrollPane, BorderLayout.CENTER);
+    }
+
+    public void updateColumnVisibility(boolean[] columnVisibility) {
+        for (int i = 0; i < columnVisibility.length; i++) {
+            table.getColumnModel().getColumn(i).setMinWidth(columnVisibility[i] ? 15 : 0);
+            table.getColumnModel().getColumn(i).setMaxWidth(columnVisibility[i] ? Integer.MAX_VALUE : 0);
+            table.getColumnModel().getColumn(i).setPreferredWidth(columnVisibility[i] ? 100 : 0);
+        }
     }
 }
