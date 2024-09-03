@@ -64,16 +64,20 @@ public class MenuBuilder {
         
         boolean[] columnVisibility = MainPanel.panel.getColumnVisibility();
 
-        JCheckBox[] checkBoxes = new JCheckBox[3];
-        checkBoxes[0] = new JCheckBox("Track", columnVisibility[0]);
-        checkBoxes[1] = new JCheckBox("Artist(s)", columnVisibility[1]);
-        checkBoxes[2] = new JCheckBox("Occurrences", columnVisibility[2]);
+        JCheckBox[] checkBoxes = new JCheckBox[5];
+        checkBoxes[0] = new JCheckBox("Artist(s)", columnVisibility[0]);
+        checkBoxes[1] = new JCheckBox("Album", columnVisibility[1]);
+        checkBoxes[2] = new JCheckBox("Track", columnVisibility[2]);
+        checkBoxes[3] = new JCheckBox("Duration (min)", columnVisibility[3]);
+        checkBoxes[4] = new JCheckBox("Occurrences", columnVisibility[4]);
         
         layout.setHorizontalGroup(
             layout.createParallelGroup(Alignment.LEADING)
                 .addComponent(checkBoxes[0])
                 .addComponent(checkBoxes[1])
                 .addComponent(checkBoxes[2])
+                .addComponent(checkBoxes[3])
+                .addComponent(checkBoxes[4])
         );
         
         layout.setVerticalGroup(
@@ -81,6 +85,8 @@ public class MenuBuilder {
                 .addComponent(checkBoxes[0])
                 .addComponent(checkBoxes[1])
                 .addComponent(checkBoxes[2])
+                .addComponent(checkBoxes[3])
+                .addComponent(checkBoxes[4])
         );
         
         dialog.add(checkBoxPanel, BorderLayout.CENTER);
@@ -90,7 +96,7 @@ public class MenuBuilder {
         okButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                boolean[] newColumnVisibility = new boolean[3];
+                boolean[] newColumnVisibility = new boolean[5];
                 for (int i = 0; i < checkBoxes.length; i++) {
                     newColumnVisibility[i] = checkBoxes[i].isSelected();
                 }

@@ -8,6 +8,7 @@ import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import org.jdesktop.swingx.JXTable;
 import main.TrackData;
@@ -18,7 +19,7 @@ public class TablePanel extends JPanel {
     private JXTable table;  
     static List<TrackData> trackData;
     
-    private boolean[] columnVisibility = { true, true, true }; 
+    private boolean[] columnVisibility = { true, false, true, false, true }; 
 
     public TablePanel() {
         setSize(823, 491);
@@ -30,7 +31,7 @@ public class TablePanel extends JPanel {
     
     public void createTable() {
         
-        String[] columnNames = { "Track", "Artist(s)", "Occurrences" };
+        String[] columnNames = { "Artist(s)", "Album", "Track", "Duration (min)", "Occurrences" };
 
         DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
             private static final long serialVersionUID = 1L;
@@ -42,8 +43,14 @@ public class TablePanel extends JPanel {
         };
 
         for (TrackData data : trackData) {
-            Object[] row = { data.getTrackName(), data.getArtistNames(), data.getOccurrence() };
-            model.addRow(row);
+        	Object[] row = { 
+                    data.getArtistNames(), 
+                    data.getAlbumName(), 
+                    data.getTrackName(), 
+                    data.getDurationMinutes(), 
+                    data.getOccurrence() 
+                };     
+        	model.addRow(row);
         }
 
         table = new JXTable(model);  
@@ -57,10 +64,23 @@ public class TablePanel extends JPanel {
         JScrollPane scrollPane = new JScrollPane(table);
 
         add(scrollPane, BorderLayout.CENTER);
-
+        
+        table.getColumnModel().getColumn(3).setCellRenderer(new DurationRenderer());
+        
         updateColumnVisibility(columnVisibility);
     }
-
+    
+    private static class DurationRenderer extends DefaultTableCellRenderer {
+        @Override
+        protected void setValue(Object value) {
+            if (value instanceof Number) {
+                setText(String.format("%.2f", (Number) value));  
+            } else {
+                super.setValue(value);
+            }
+        }
+    }
+    
     public void updateColumnVisibility(boolean[] columnVisibility) {
         this.columnVisibility = columnVisibility; 
         for (int i = 0; i < columnVisibility.length; i++) {

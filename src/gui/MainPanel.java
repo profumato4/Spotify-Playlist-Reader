@@ -77,9 +77,15 @@ public class MainPanel extends JPanel {
                 					JOptionPane.ERROR_MESSAGE);
                         }
 
-                    } catch (ParseException | SpotifyWebApiException | IOException | InterruptedException e1) {
+                    } catch (SpotifyWebApiException | IOException | InterruptedException e1) {
                         e1.printStackTrace();
-                    } finally {
+                    } catch (ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} catch (com.formdev.flatlaf.json.ParseException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					} finally {
                     	loadingPanel.setVisible(false);
                     }
                     revalidate();
