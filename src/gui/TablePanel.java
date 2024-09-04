@@ -71,7 +71,12 @@ public class TablePanel extends JPanel {
     }
     
     private static class DurationRenderer extends DefaultTableCellRenderer {
-        @Override
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		@Override
         protected void setValue(Object value) {
             if (value instanceof Number) {
                 setText(String.format("%.2f", (Number) value));  
