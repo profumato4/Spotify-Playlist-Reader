@@ -40,6 +40,15 @@ public class TablePanel extends JPanel {
             public boolean isCellEditable(int row, int column) {
                 return false;  // All cells are non-editable
             }
+            
+            @Override
+            public Class<?> getColumnClass(int columnIndex) {
+                if (columnIndex == 3) {  
+                    return Double.class;  
+                }
+                return super.getColumnClass(columnIndex);
+            }
+            
         };
 
         for (TrackData data : trackData) {
@@ -53,6 +62,7 @@ public class TablePanel extends JPanel {
         	model.addRow(row);
         }
 
+        System.out.println(model.getColumnClass(3));
         table = new JXTable(model);  
         table.setSortable(true);  
 
