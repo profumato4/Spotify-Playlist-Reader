@@ -9,4 +9,3 @@ Spotify Playlist Reader deals with analyzing the playlists (for the moment only 
 ![](https://github.com/profumato4/Spotify-Playlist-Reader/blob/master/res/5.png)
 ![](https://github.com/profumato4/Spotify-Playlist-Reader/blob/master/res/6.png)
 ![](https://github.com/profumato4/Spotify-Playlist-Reader/blob/master/res/7.png)
-![](https://github.com/profumato4/Spotify-Playlist-Reader/blob/master/res/8.png)
