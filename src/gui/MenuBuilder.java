@@ -55,7 +55,7 @@ public class MenuBuilder {
     }
     
     private static void showSettingsDialog() {
-        JDialog dialog = new JDialog(App.frame, "Seleziona colonne", true);
+        JDialog dialog = new JDialog(App.frame, "Select column", true);
         dialog.setLayout(new BorderLayout());
         
         JPanel checkBoxPanel = new JPanel();
