@@ -20,3 +20,20 @@ Just go the [releases](https://github.com/profumato4/Spotify-Playlist-Reader/rel
 
 
 
+### Hard way
+
+In this step you need to modify some lines of code to make the program work. 
+
+First let's go to [developer spotify](https://developer.spotify.com/dashboard) in the dashboard and create a new app. Enter a name for your app and the various information required
+
+Now go back to the dashboard and click on your app, then settings and copy your `client id` and your `client secret`
+
+Now open the main.py file and replace the following lines with the `client id` and `client secret`
+
+```python
+client_id = "YOUR CLIENT ID"      # Replace with your client ID
+client_secret = "YOUR CLIENT SECRET"  # Replace with your client secret
+```
+
+Save the file and run the java main file `App.java` in `src/gui` . 
+
