@@ -19,3 +19,4 @@ You can't see it from the video but by clicking on option you can see more colum
 Just go the [releases](https://github.com/profumato4/Spotify-Playlist-Reader/releases), install the latest version of the .exe file and run it
 
 
+
