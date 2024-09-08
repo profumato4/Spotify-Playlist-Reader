@@ -37,3 +37,10 @@ client_secret = "YOUR CLIENT SECRET"  # Replace with your client secret
 
 Save the file and run the java main file `App.java` in `src/gui` . 
 
+# License
+This software is released under the MIT license. See the file [LICENSE](https://github.com/profumato4/Spotify-Playlist-Reader/blob/master/LICENSE.MD) for further information.
+
+# Questions or problems?
+If you have questions or encounter issues, please use [issue tracker](https://github.com/profumato4/Spotify-Playlist-Reader/issues) in the repository to report them.
+
+
