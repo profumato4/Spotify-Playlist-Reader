@@ -34,6 +34,14 @@ public class MenuBuilder {
         JMenu optionMenu = new JMenu("Option");
         menuBar.add(optionMenu);
         
+        JMenuItem song = new JMenuItem("Show every Song: TRUE");
+        song.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                
+            }
+        });
+        optionMenu.add(song);
+        
         JMenuItem settings = new JMenuItem("Settings");
         settings.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
