@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JCheckBox;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JDialog;
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -16,7 +17,9 @@ import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
 public class MenuBuilder {
-
+	
+	public static JCheckBoxMenuItem showEverySongItem;
+	
     public static void createMenu() {
         
         UIManager.put("MenuBar.background", Color.BLACK);
@@ -34,13 +37,13 @@ public class MenuBuilder {
         JMenu optionMenu = new JMenu("Option");
         menuBar.add(optionMenu);
         
-        JMenuItem song = new JMenuItem("Show every Song: TRUE");
-        song.addActionListener(new ActionListener() {
+        showEverySongItem = new JCheckBoxMenuItem("Show Every Song", true);
+        showEverySongItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                
+                MainPanel.panel.updateTableVisibility(); 
             }
         });
-        optionMenu.add(song);
+        optionMenu.add(showEverySongItem);
         
         JMenuItem settings = new JMenuItem("Settings");
         settings.addActionListener(new ActionListener() {

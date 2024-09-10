@@ -30,7 +30,12 @@ public class TablePanel extends JPanel {
     }
     
     public void createTable() {
-        
+        updateTableVisibility();
+    }
+    
+    // Method to update table visibility based on the "Show Every Song" checkbox
+    public void updateTableVisibility() {
+        boolean showEverySong = MenuBuilder.showEverySongItem.isSelected();
         String[] columnNames = { "Artist(s)", "Album", "Track", "Duration (min)", "Occurrences" };
 
         DefaultTableModel model = new DefaultTableModel(columnNames, 0) {
@@ -52,17 +57,19 @@ public class TablePanel extends JPanel {
         };
 
         for (TrackData data : trackData) {
-        	Object[] row = { 
+            // Filter tracks based on occurrence if "Show Every Song" is false
+            if (showEverySong || data.getOccurrence() > 1) {
+                Object[] row = { 
                     data.getArtistNames(), 
                     data.getAlbumName(), 
                     data.getTrackName(), 
                     data.getDurationMinutes(), 
                     data.getOccurrence() 
                 };     
-        	model.addRow(row);
+                model.addRow(row);
+            }
         }
 
-        System.out.println(model.getColumnClass(3));
         table = new JXTable(model);  
         table.setSortable(true);  
 
@@ -73,20 +80,21 @@ public class TablePanel extends JPanel {
         
         JScrollPane scrollPane = new JScrollPane(table);
 
+        removeAll();  // Clear existing table before adding the new one
         add(scrollPane, BorderLayout.CENTER);
         
         table.getColumnModel().getColumn(3).setCellRenderer(new DurationRenderer());
         
         updateColumnVisibility(columnVisibility);
+
+        revalidate();
+        repaint();
     }
     
     private static class DurationRenderer extends DefaultTableCellRenderer {
-        /**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		@Override
+        @Override
         protected void setValue(Object value) {
             if (value instanceof Number) {
                 setText(String.format("%.2f", (Number) value));  
@@ -109,3 +117,4 @@ public class TablePanel extends JPanel {
         return columnVisibility;
     }
 }
+
