@@ -1,7 +1,7 @@
 # Spotify Playlist Reader
 
 ![GitHub License](https://img.shields.io/github/license/profumato4/Spotify-Playlist-Reader)
-[![Download](https://img.shields.io/github/downloads/profumato4/Spotify-Playlist-Reader/total)](https://github.com/profumato4/Spotify-Playlist-Reader/releases/tag/1.0)
+[![Download](https://img.shields.io/github/downloads/profumato4/Spotify-Playlist-Reader/total)](https://github.com/profumato4/Spotify-Playlist-Reader/releases)
 ![GitHub Repo stars](https://img.shields.io/github/stars/profumato4/Spotify-Playlist-Reader)
 
 
