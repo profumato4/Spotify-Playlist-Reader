@@ -1,6 +1,7 @@
 package main;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -18,6 +19,7 @@ import se.michaelthelin.spotify.model_objects.specification.Paging;
 import se.michaelthelin.spotify.model_objects.specification.PlaylistTrack;
 import se.michaelthelin.spotify.model_objects.specification.Track;
 import se.michaelthelin.spotify.requests.data.playlists.GetPlaylistsItemsRequest;
+import utils.PythonScriptHandler;
 
 public class PlaylistReader {
 
@@ -36,14 +38,11 @@ public class PlaylistReader {
 
 		if (!playlistId.isEmpty()) {
 			// Start a Python process to retrieve the Spotify access token
-			ProcessBuilder processBuilder = new ProcessBuilder("python", "main.py");
-			Process process = processBuilder.start();
-			BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			File pythonScript = PythonScriptHandler.getPythonScript("res/main.py");
 
 			// Read the token from the Python script output
-			String token = reader.readLine();
+			String token = PythonScriptHandler.runPythonScript(pythonScript);
 			System.out.println(token); // Debugging: print the token to verify it isn't null
-			reader.close();
 
 			int offset = 0; // Offset for pagination
 			Map<String, Integer> trackCountMap = new HashMap<>(); // Map to count track occurrences
