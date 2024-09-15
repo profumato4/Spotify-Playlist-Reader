@@ -118,7 +118,7 @@ public class MenuBuilder {
 	        App.frame,
 	        "Choose export format:",
 	        "Export Data",
-	        JOptionPane.PLAIN_MESSAGE,
+	        JOptionPane.QUESTION_MESSAGE,
 	        null,
 	        formats,
 	        formats[0]
