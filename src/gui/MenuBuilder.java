@@ -46,15 +46,26 @@ public class MenuBuilder {
 
 		JMenu optionMenu = new JMenu("Option");
 		menuBar.add(optionMenu);
-
+		
+		JMenu downloadMenu = new JMenu("Download");
+		menuBar.add(downloadMenu);
+		
 		JMenuItem exportData = new JMenuItem("Export Data");
 		exportData.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				showExportDialog();
 			}
 		});
-		optionMenu.add(exportData);
-
+		downloadMenu.add(exportData);
+		
+		JMenuItem exportAudio = new JMenuItem("Export Audio");
+		exportAudio.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		downloadMenu.add(exportAudio);
+		
 		showEverySongItem = new JCheckBoxMenuItem("Show Every Song", true);
 		showEverySongItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -115,17 +126,17 @@ public class MenuBuilder {
 	            try {
 	                if (!file.exists()) {
 	                    if (!file.createNewFile()) {
-	                        throw new IOException("Unable to create file.");
+	                        throw new IOException("Unable to create file");
 	                    }
 	                } else if (!file.canWrite()) {
-	                    throw new IOException("No write permission for this file.");
+	                    throw new IOException("No write permission for this file");
 	                }
 
 	                exportPlaylistData(filePath, format); 
 
 	                if (file.length() == 0) {
 	                    file.delete();
-	                    throw new IOException("The file is empty and cannot be saved.");
+	                    throw new IOException("No data to export");
 	                }
 
 	            } catch (IOException e) {
