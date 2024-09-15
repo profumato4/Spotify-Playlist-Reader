@@ -137,5 +137,9 @@ public class TablePanel extends JPanel {
         return trackDataList;
     }
     
+    public JXTable getTable() {
+    	return table;
+    }
+    
 }
 

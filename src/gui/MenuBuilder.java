@@ -84,60 +84,87 @@ public class MenuBuilder {
 	}
 
 	private static void showExportDialog() {
-		String[] formats = { "CSV", "JSON", "XML" };
-		String format = (String) JOptionPane.showInputDialog(App.frame, "Choose export format:", "Export Data",
-				JOptionPane.QUESTION_MESSAGE, null, formats, formats[0]);
+	    String[] formats = {"CSV", "JSON", "XML"};
+	    String format = (String) JOptionPane.showInputDialog(
+	        App.frame,
+	        "Choose export format:",
+	        "Export Data",
+	        JOptionPane.QUESTION_MESSAGE,
+	        null,
+	        formats,
+	        formats[0]
+	    );
 
-		if (format != null) {
-			// Open file chooser to select path
-			JFileChooser fileChooser = new JFileChooser();
-			fileChooser.setDialogTitle("Specify a file to save");
+	    if (format != null) {
+	        JFileChooser fileChooser = new JFileChooser();
+	        fileChooser.setDialogTitle("Specify a file to save");
 
-			// Set file extension based on format
-			int userSelection = fileChooser.showSaveDialog(App.frame);
-			if (userSelection == JFileChooser.APPROVE_OPTION) {
-				File fileToSave = fileChooser.getSelectedFile();
+	        String defaultFileName = "playlist." + format.toLowerCase();
+	        fileChooser.setSelectedFile(new File(defaultFileName));
 
-				// Append the correct file extension
-				String filePath = fileToSave.getAbsolutePath();
-				if (!filePath.endsWith("." + format.toLowerCase())) {
-					filePath += "." + format.toLowerCase();
-				}
-
-				try {
-					exportPlaylistData(filePath, format);
-				} catch (IOException e) {
-					e.printStackTrace();
-					JOptionPane.showMessageDialog(App.frame, "Error exporting data", "Error",
-							JOptionPane.ERROR_MESSAGE);
-				}
-			}
-		}
-	}
-
-	private static void exportPlaylistData(String filePath, String format) throws IOException {
-	    List<TrackData> trackData = MainPanel.panel.getTrackData();
-
-	    switch (format) {
-	        case "CSV":
-	            ExportManager.exportToCSV(filePath, trackData);
-	            break;
-	        case "JSON":
-	            ExportManager.exportToJSON(filePath, trackData);
-	            break;
-	        case "XML":
-	            try {
-	                ExportManager.exportToXML(filePath, trackData);
-	            } catch (Exception e) {
-	                e.printStackTrace();
-	                JOptionPane.showMessageDialog(App.frame, "Error exporting to XML", "Error", JOptionPane.ERROR_MESSAGE);
+	        int userSelection = fileChooser.showSaveDialog(App.frame);
+	        if (userSelection == JFileChooser.APPROVE_OPTION) {
+	            File fileToSave = fileChooser.getSelectedFile();
+	            
+	            String filePath = fileToSave.getAbsolutePath();
+	            if (!filePath.endsWith("." + format.toLowerCase())) {
+	                filePath += "." + format.toLowerCase();
 	            }
-	            break;
-	        default:
-	            JOptionPane.showMessageDialog(App.frame, "Unknown format selected", "Error", JOptionPane.ERROR_MESSAGE);
+
+	            File file = new File(filePath);
+	            try {
+	                if (!file.exists()) {
+	                    if (!file.createNewFile()) {
+	                        throw new IOException("Unable to create file.");
+	                    }
+	                } else if (!file.canWrite()) {
+	                    throw new IOException("No write permission for this file.");
+	                }
+
+	                exportPlaylistData(filePath, format); 
+
+	                if (file.length() == 0) {
+	                    file.delete();
+	                    throw new IOException("The file is empty and cannot be saved.");
+	                }
+
+	            } catch (IOException e) {
+	                JOptionPane.showMessageDialog(App.frame, "Error: " + e.getMessage(), "File Save Error", JOptionPane.ERROR_MESSAGE);
+	            }
+	        }
 	    }
 	}
 
+
+
+	private static void exportPlaylistData(String filePath, String format) throws IOException {
+
+		if (MainPanel.panel.getTable() != null) {
+
+			List<TrackData> trackData = MainPanel.panel.getTrackData();
+
+			switch (format) {
+			case "CSV":
+				ExportManager.exportToCSV(filePath, trackData);
+				break;
+			case "JSON":
+				ExportManager.exportToJSON(filePath, trackData);
+				break;
+			case "XML":
+				try {
+					ExportManager.exportToXML(filePath, trackData);
+				} catch (Exception e) {
+					e.printStackTrace();
+					JOptionPane.showMessageDialog(App.frame, "Error exporting to XML", "Error",
+							JOptionPane.ERROR_MESSAGE);
+				}
+				break;
+			default:
+				JOptionPane.showMessageDialog(App.frame, "Unknown format selected", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+
+		}
+	}
 
 	private static void showSettingsDialog() {
 		JDialog dialog = new JDialog(App.frame, "Select column", true);
