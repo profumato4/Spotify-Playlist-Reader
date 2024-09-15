@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -116,5 +117,25 @@ public class TablePanel extends JPanel {
     public boolean[] getColumnVisibility() {
         return columnVisibility;
     }
+    
+    public List<TrackData> getTrackData() {
+        List<TrackData> trackDataList = new ArrayList<>();
+
+        // Loop through the rows in the table model
+        for (int i = 0; i < table.getRowCount(); i++) {
+            String artistNames = (String) table.getValueAt(i, 0);
+            String albumName = (String) table.getValueAt(i, 1);
+            String trackName = (String) table.getValueAt(i, 2);
+            double duration = (Double) table.getValueAt(i, 3);
+            int occurrence = (Integer) table.getValueAt(i, 4);
+
+            // Create a TrackData object for each row
+            TrackData trackData = new TrackData(trackName, artistNames, occurrence, albumName, duration);
+            trackDataList.add(trackData);
+        }
+
+        return trackDataList;
+    }
+    
 }
 
