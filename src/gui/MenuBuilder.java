@@ -61,7 +61,7 @@ public class MenuBuilder {
 		JMenuItem exportAudio = new JMenuItem("Export Audio");
 		exportAudio.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				showExportAudioDialog();
 			}
 		});
 		downloadMenu.add(exportAudio);
@@ -93,14 +93,32 @@ public class MenuBuilder {
 		});
 		optionMenu.add(back);
 	}
-
+	
+	private static void showExportAudioDialog() {
+		String[] formats = {"MP3", "WAV"};
+	    String format = (String) JOptionPane.showInputDialog(
+	        App.frame,
+	        "Choose export format:",
+	        "Export Audio",
+	        JOptionPane.QUESTION_MESSAGE,
+	        null,
+	        formats,
+	        formats[0]
+	    );
+	    
+	    if(format != null) {
+	    	
+	    }
+	    
+	}
+	
 	private static void showExportDialog() {
 	    String[] formats = {"CSV", "JSON", "XML"};
 	    String format = (String) JOptionPane.showInputDialog(
 	        App.frame,
 	        "Choose export format:",
 	        "Export Data",
-	        JOptionPane.QUESTION_MESSAGE,
+	        JOptionPane.PLAIN_MESSAGE,
 	        null,
 	        formats,
 	        formats[0]
@@ -146,7 +164,7 @@ public class MenuBuilder {
 	    }
 	}
 
-
+	
 
 	private static void exportPlaylistData(String filePath, String format) throws IOException {
 
