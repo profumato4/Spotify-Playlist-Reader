@@ -38,7 +38,24 @@ Save the file and run the java main file `App.java` in `src/gui` .
 
 # How to Use it
 
-Ok so after u've installed the file `.exe` or just runned the software by an IDE the first thing to do is to get the playlist link, you can use too the playlist id, before to press enter or click on the done button i suggest you to edit the settings in menu bar for example there's the option that show in the table every songs or only songs that are more times in the playlist. If this option is flagged so u'll see every songs in the table . You can edit this settings while u're looking the table too . There are more settings like you can edit the column that are showed in the table by the default are only `Artist`, `Track`, `Occurences` and with the option `Settings` in the menu bar you can add or remove some columns . All columns are : `Artist`, `Album`, `Track`, `Duration ` (in min), `Occurences` . Flag or remove the flag to see these columns. I tried to explain as best as I could how to use the software but I think the video above can also be of help
+Once you’ve installed the `.exe`  file or run the software in an IDE, the first step is to get the playlist link or playlist ID. Before pressing enter or clicking on the "Done" button, you can adjust settings in the menu bar to customize your view.
+
+### Menu Bar Option:
+
+- **Option Menu:**
+
+    - **Show Every song:** This checkbox, when checked, will display all songs in the table. If unchecked, only songs that appear in the playlist more than once will be shown. 
+
+    - **Settings:** Modify the columns displayed in the table. By default, the columns are `Artist`, `Track`, and `Occurrences`. You can add or remove columns like `Album`, `Duration (min)`, and others.
+
+    - **Go back to main menu:** This option returns you to the main screen.
+
+- **Download Menu:** 
+
+    - **Export Data:** Allows you to export playlist data to various formats (CSV, JSON, or XML).
+
+    - **Export Audio:** (Currently unavailable) will enable downloading the audio files when implemented. 
+
 
 # License
 This software is released under the MIT license. See the file [LICENSE](https://github.com/profumato4/Spotify-Playlist-Reader/blob/master/LICENSE.MD) for further information.
