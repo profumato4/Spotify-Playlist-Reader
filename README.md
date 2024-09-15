@@ -10,7 +10,6 @@ Spotify Playlist Reader deals with analyzing the playlists (for the moment only 
 
 https://github.com/user-attachments/assets/d0493a6e-1908-4879-ba1c-9b68fd7a311f
 
-You can't see it from the video but by clicking on option you can see more columns or fewer columns or go back to the first page
 
 # How to Install it
 
