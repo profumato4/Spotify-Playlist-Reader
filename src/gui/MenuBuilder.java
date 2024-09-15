@@ -107,7 +107,12 @@ public class MenuBuilder {
 	    );
 	    
 	    if(format != null) {
-	    	
+	    	JOptionPane.showMessageDialog(
+	    	        App.frame,
+	    	        "The audio export feature will be available in a future update",
+	    	        "Feature Coming Soon",
+	    	        JOptionPane.INFORMATION_MESSAGE
+	    	    );
 	    }
 	    
 	}
