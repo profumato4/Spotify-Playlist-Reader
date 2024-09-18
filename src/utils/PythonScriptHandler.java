@@ -1,6 +1,8 @@
 package utils;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class PythonScriptHandler {
 
@@ -52,4 +54,33 @@ public class PythonScriptHandler {
         process.waitFor();
         return token;
     }
+    
+    
+    // Method to run the Python script with arguments
+    public static String runPythonScriptWithArgs(File script, List<String> args) throws IOException, InterruptedException {
+    	
+        // Prepare the command: python <script> <args...>
+    	
+        List<String> command = new ArrayList<>();
+        command.add("python");
+        command.add(script.getAbsolutePath());
+        command.addAll(args);
+
+        ProcessBuilder processBuilder = new ProcessBuilder(command);
+        Process process = processBuilder.start();
+        BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+        // Read the script output
+        
+        StringBuilder output = new StringBuilder();
+        String line;
+        while ((line = reader.readLine()) != null) {
+            output.append(line).append(System.lineSeparator());
+        }
+        reader.close();
+
+        process.waitFor();
+        return output.toString().trim();
+    }
+    
 }
