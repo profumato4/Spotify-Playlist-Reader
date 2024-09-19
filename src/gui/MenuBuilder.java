@@ -21,6 +21,7 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 
 import main.TrackData;
+import utils.AudioDownloader;
 import utils.ExportManager;
 
 import javax.swing.GroupLayout;
@@ -95,7 +96,7 @@ public class MenuBuilder {
 	}
 	
 	private static void showExportAudioDialog() {
-		String[] formats = {"MP3", "WAV"};
+	    String[] formats = {"MP3", "WAV"};
 	    String format = (String) JOptionPane.showInputDialog(
 	        App.frame,
 	        "Choose export format:",
@@ -107,15 +108,18 @@ public class MenuBuilder {
 	    );
 	    
 	    if(format != null) {
-	    	JOptionPane.showMessageDialog(
-	    	        App.frame,
-	    	        "The audio export feature will be available in a future update",
-	    	        "Feature Coming Soon",
-	    	        JOptionPane.INFORMATION_MESSAGE
-	    	    );
+	        for (TrackData track : MainPanel.panel.getTrackData()) {
+	            AudioDownloader.downloadTrackAsAudio(track.getTrackName(), track.getArtistNames(), format.toLowerCase());
+	        }
+	        JOptionPane.showMessageDialog(
+	            App.frame,
+	            "Audio export completed",
+	            "Success",
+	            JOptionPane.INFORMATION_MESSAGE
+	        );
 	    }
-	    
 	}
+
 	
 	private static void showExportDialog() {
 	    String[] formats = {"CSV", "JSON", "XML"};
