@@ -7,7 +7,10 @@ def download_audio(track_name, artist_name, file_format='mp3'):
     # Search for the song on YouTube by formatting the query with track and artist
 
     query = f"{track_name} {artist_name} audio"
-
+	
+	# Ensure the output path is correctly set to the specified folder
+    output_path = os.path.join(output_folder, f"{track_name}.{file_format}")
+	
     # Download options configured for yt-dlp
 
     ydl_opts = {
@@ -45,6 +48,8 @@ if __name__ == "__main__":
     parser.add_argument("track_name", type=str, help="The name of the track")
     parser.add_argument("artist_name", type=str, help="The name of the artist")
     parser.add_argument("--format", type=str, default="mp3", help="The audio format (default: mp3)")
+    parser.add_argument("--output", type=str, default=".", help="The output folder (default: current directory)")
+
 
     # Parse the arguments
 
