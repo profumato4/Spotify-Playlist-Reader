@@ -96,29 +96,46 @@ public class MenuBuilder {
 	}
 	
 	private static void showExportAudioDialog() {
-	    String[] formats = {"MP3", "WAV"};
-	    String format = (String) JOptionPane.showInputDialog(
-	        App.frame,
-	        "Choose export format:",
-	        "Export Audio",
-	        JOptionPane.QUESTION_MESSAGE,
-	        null,
-	        formats,
-	        formats[0]
-	    );
-	    
-	    if(format != null) {
-	        for (TrackData track : MainPanel.panel.getTrackData()) {
-	            AudioDownloader.downloadTrackAsAudio(track.getTrackName(), track.getArtistNames(), format.toLowerCase());
-	        }
-	        JOptionPane.showMessageDialog(
-	            App.frame,
-	            "Audio export completed",
-	            "Success",
-	            JOptionPane.INFORMATION_MESSAGE
-	        );
-	    }
-	}
+        String[] formats = {"MP3", "WAV"};
+        String format = (String) JOptionPane.showInputDialog(
+            App.frame,
+            "Choose export format:",
+            "Export Audio",
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            formats,
+            formats[0]
+        );
+
+        if (format != null) {
+            JFileChooser folderChooser = new JFileChooser();
+            folderChooser.setDialogTitle("Select Folder to Save Audio Files");
+            folderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+            folderChooser.setAcceptAllFileFilterUsed(false);
+
+            int userSelection = folderChooser.showSaveDialog(App.frame);
+            if (userSelection == JFileChooser.APPROVE_OPTION) {
+                File selectedFolder = folderChooser.getSelectedFile();
+
+                for (TrackData track : MainPanel.panel.getTrackData()) {
+                    // Pass the selected folder path to downloadTrackAsAudio
+                    AudioDownloader.downloadTrackAsAudio(
+                        track.getTrackName(),
+                        track.getArtistNames(),
+                        format.toLowerCase(),
+                        selectedFolder.getAbsolutePath()
+                    );
+                }
+
+                JOptionPane.showMessageDialog(
+                    App.frame,
+                    "Audio export completed",
+                    "Success",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            }
+        }
+    }
 
 	
 	private static void showExportDialog() {
