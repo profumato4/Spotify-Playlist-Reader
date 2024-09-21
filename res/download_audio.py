@@ -1,8 +1,9 @@
 import yt_dlp
 import argparse
+import os
 
 
-def download_audio(track_name, artist_name, file_format='mp3'):
+def download_audio(track_name, artist_name, file_format='mp3', output_folder='.'):
 
     # Search for the song on YouTube by formatting the query with track and artist
 
@@ -10,13 +11,14 @@ def download_audio(track_name, artist_name, file_format='mp3'):
 	
 	# Ensure the output path is correctly set to the specified folder
     output_path = os.path.join(output_folder, f"{track_name}.{file_format}")
+    output_path = os.path.normpath(output_path)
 	
     # Download options configured for yt-dlp
 
     ydl_opts = {
         'format': 'bestaudio/best',
         'noplaylist': True,
-        'outtmpl': f'{track_name}.{file_format}',
+        'outtmpl': output_path,  # Set the output path to the specified folder
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': file_format,
@@ -30,7 +32,7 @@ def download_audio(track_name, artist_name, file_format='mp3'):
             # Search on YouTube and download the first result
 
             ydl.download([f"ytsearch1:{query}"])
-            print(f"Downloaded: {track_name}.{file_format}")
+            print(f"Downloaded: {track_name}.{file_format}.{output_path}")
 
         except Exception as e:
 
@@ -57,4 +59,4 @@ if __name__ == "__main__":
 
     # Call the function with the parsed arguments
     
-    download_audio(args.track_name, args.artist_name, args.format)
+    download_audio(args.track_name, args.artist_name, args.format, args.output)
