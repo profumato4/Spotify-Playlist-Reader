@@ -1,10 +1,23 @@
 import yt_dlp
 import argparse
 import os
+import re
 
+def sanitize_filename(name):
+	
+	"""
+    Replace or remove characters that are not allowed in filenames.
+    This helps to prevent issues with paths and file creation.
+    """
+    
+	return re.sub(r'[<>:"/\\|?*\']', '_', name)
 
 def download_audio(track_name, artist_name, file_format='mp3', output_folder='.'):
-
+	
+	# Sanitize track and artist names to avoid issues with file paths
+    safe_track_name = sanitize_filename(track_name)
+    safe_artist_name = sanitize_filename(artist_name)
+	
     # Search for the song on YouTube by formatting the query with track and artist
 
     query = f"{track_name} {artist_name} audio"
