@@ -96,7 +96,7 @@ public class MenuBuilder {
 	}
 	
 	private static void showExportAudioDialog() {
-        String[] formats = {"MP3", "WAV"};
+        String[] formats = {"MP3", "WAV","FLAC"};
         String format = (String) JOptionPane.showInputDialog(
             App.frame,
             "Choose export format:",
