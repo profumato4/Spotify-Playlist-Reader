@@ -13,9 +13,17 @@ public class PythonScriptHandler {
         if (file.exists()) {
             return file;
         }
-
+        
         // Otherwise, extract it from the JAR (JAR execution case)
-        return extractPythonScriptFromJar("/res/main.py");
+        
+        if(resourcePath.contains("main.py")) {
+        	return extractPythonScriptFromJar("/res/main.py");
+        }else if(resourcePath.contains("download_audio.py")){
+        	return extractPythonScriptFromJar("/res/download_audio.py");
+        }
+        
+        
+        return null;
     }
 
     // Method to extract the Python file from JAR to a temporary location
