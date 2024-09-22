@@ -40,7 +40,6 @@ public class PlaylistReader {
 
 			// Read the token from the Python script output
 			String token = PythonScriptHandler.runPythonScript(pythonScript);
-			System.out.println(token); // Debugging: print the token to verify it isn't null
 
 			int offset = 0; // Offset for pagination
 			Map<String, Integer> trackCountMap = new HashMap<>(); // Map to count track occurrences
