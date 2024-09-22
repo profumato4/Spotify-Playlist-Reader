@@ -9,10 +9,10 @@ def sanitize_filename(name):
     Replace or remove characters that are not allowed in filenames.
     This helps to prevent issues with paths and file creation.
     """
-    
-	return re.sub(r'[<>:"/\\|?*\']', '_', name)
 
-def download_audio(track_name, artist_name, file_format='mp3', output_folder='.'):
+	return re.sub(r'[<>:"/\\|?*]', '_', name).strip()
+
+def download_audio(track_name, artist_name, file_format='mp3', output_folder='.', track_duration=None):
 	
 	# Sanitize track and artist names to avoid issues with file paths
     safe_track_name = sanitize_filename(track_name)
@@ -20,7 +20,7 @@ def download_audio(track_name, artist_name, file_format='mp3', output_folder='.'
 	
     # Search for the song on YouTube by formatting the query with track and artist
 
-    query = f"{track_name} {artist_name} audio"
+    query = f"{safe_track_name} {safe_artist_name}"
 	
 	# Ensure the output path is correctly set to the specified folder
     output_path = os.path.join(output_folder, f"{track_name}.{file_format}")
@@ -31,7 +31,7 @@ def download_audio(track_name, artist_name, file_format='mp3', output_folder='.'
     ydl_opts = {
         'format': 'bestaudio/best',
         'noplaylist': True,
-        'outtmpl': output_path,  # Set the output path to the specified folder
+        'outtmpl': output_path,
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': file_format,
@@ -65,6 +65,7 @@ if __name__ == "__main__":
     parser.add_argument("--format", type=str, default="mp3", help="The audio format (default: mp3)")
     parser.add_argument("--output", type=str, default=".", help="The output folder (default: current directory)")
 
+#    parser.add_argument("--duration", type=float, help="The track duration in minutes")
 
     # Parse the arguments
 
