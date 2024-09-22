@@ -15,6 +15,7 @@ def sanitize_filename(name):
 def download_audio(track_name, artist_name, file_format='mp3', output_folder='.', track_duration=None):
 	
 	# Sanitize track and artist names to avoid issues with file paths
+	
     safe_track_name = sanitize_filename(track_name)
     safe_artist_name = sanitize_filename(artist_name)
 	
@@ -23,7 +24,7 @@ def download_audio(track_name, artist_name, file_format='mp3', output_folder='.'
     query = f"{safe_track_name} {safe_artist_name}"
 	
 	# Ensure the output path is correctly set to the specified folder
-    output_path = os.path.join(output_folder, f"{track_name}.{file_format}")
+    output_path = os.path.join(output_folder, f"{safe_track_name}.{file_format}")
     output_path = os.path.normpath(output_path)
 	
     # Download options configured for yt-dlp
