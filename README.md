@@ -55,7 +55,7 @@ Once you’ve installed the `.exe`  file or run the software in an IDE, the firs
 
     - **Export Data:** Allows you to export playlist data to various formats (CSV, JSON, or XML).
 
-    - **Export Audio:** (Currently unavailable) will enable downloading the audio files when implemented. 
+    - **Export Audio:** Allows you to export playlist to audio to various formats (MP3, WAV, or FLAC). 
 
 
 # License
