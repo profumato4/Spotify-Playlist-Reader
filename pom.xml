@@ -32,9 +32,9 @@
 		<sourceDirectory>src</sourceDirectory>
 		<resources>
 			<resource>
-				<directory>res</directory>
+				<directory>res/dist</directory>
 				<includes>
-					<include>**/*.py</include>
+					<include>**/*.exe</include>
 				</includes>
 			</resource>
 		</resources>
