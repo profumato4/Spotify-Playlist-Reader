@@ -51,7 +51,7 @@ public class PythonScriptHandler {
 
     // Method to run the Python script
     public static String runPythonScript(File script) throws IOException, InterruptedException {
-        ProcessBuilder processBuilder = new ProcessBuilder("python", script.getAbsolutePath());
+        ProcessBuilder processBuilder = new ProcessBuilder(script.getAbsolutePath());
         Process process = processBuilder.start();
         BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
 

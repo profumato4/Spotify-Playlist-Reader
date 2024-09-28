@@ -36,7 +36,7 @@ public class PlaylistReader {
 
 		if (!playlistId.isEmpty()) {
 			// Start a Python process to retrieve the Spotify access token
-			File pythonScript = PythonScriptHandler.getPythonScript("res/main.py");
+			File pythonScript = PythonScriptHandler.getPythonScript("res/dist/main.exe");
 
 			// Read the token from the Python script output
 			String token = PythonScriptHandler.runPythonScript(pythonScript);
