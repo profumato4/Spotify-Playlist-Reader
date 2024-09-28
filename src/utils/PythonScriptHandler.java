@@ -16,10 +16,10 @@ public class PythonScriptHandler {
         
         // Otherwise, extract it from the JAR (JAR execution case)
         
-        if(resourcePath.contains("main.py")) {
-        	return extractPythonScriptFromJar("/res/main.py");
-        }else if(resourcePath.contains("download_audio.py")){
-        	return extractPythonScriptFromJar("/res/download_audio.py");
+        if(resourcePath.contains("main")) {
+        	return extractPythonScriptFromJar("main.exe");
+        }else if(resourcePath.contains("download_audio")){
+        	return extractPythonScriptFromJar("download_audio.exe");
         }
         
         
