@@ -17,27 +17,27 @@ public class PythonScriptHandler {
         // Otherwise, extract it from the JAR (JAR execution case)
         
         if(resourcePath.contains("main")) {
-        	return extractPythonScriptFromJar("main.exe");
+        	return extractExecutableFromJar("/main.exe");
         }else if(resourcePath.contains("download_audio")){
-        	return extractPythonScriptFromJar("download_audio.exe");
+        	return extractExecutableFromJar("/download_audio.exe");
         }
         
         
         return null;
     }
 
-    // Method to extract the Python file from JAR to a temporary location
-    public static File extractPythonScriptFromJar(String resourcePath) throws IOException {
+    // Method to extract the executable file from JAR to a temporary location
+    public static File extractExecutableFromJar(String resourcePath) throws IOException {
         InputStream in = PythonScriptHandler.class.getResourceAsStream(resourcePath);
         if (in == null) {
             throw new FileNotFoundException("Resource not found: " + resourcePath);
         }
 
-        // Create a temp file for the script
-        File tempFile = File.createTempFile("main", ".py");
+        // Create a temp file for the executable
+        File tempFile = File.createTempFile(resourcePath.replace(".exe", ""), ".exe");
         tempFile.deleteOnExit();
 
-        // Copy the script content to the temp file
+        // Copy the executable content to the temp file
         try (OutputStream out = new FileOutputStream(tempFile)) {
             byte[] buffer = new byte[1024];
             int bytesRead;
