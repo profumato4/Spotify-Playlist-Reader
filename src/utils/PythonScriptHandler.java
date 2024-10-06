@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PythonScriptHandler {
-
+	
+	private static boolean audio = false;
+	
     // Method to find the Python script either in the resources or on the filesystem
     public static File getPythonScript(String resourcePath) throws IOException {
         // Check if the file exists on the filesystem (IDE case)
@@ -19,6 +21,7 @@ public class PythonScriptHandler {
         if(resourcePath.contains("main")) {
         	return extractExecutableFromJar("/main.exe");
         }else if(resourcePath.contains("download_audio")){
+        	audio = true;
         	return extractExecutableFromJar("/download_audio.exe");
         }
         
@@ -70,7 +73,9 @@ public class PythonScriptHandler {
         // Prepare the command: python <script> <args...>
     	
         List<String> command = new ArrayList<>();
-        command.add("python");
+        if(!audio) {
+        	command.add("python");
+        }
         command.add(script.getAbsolutePath());
         command.addAll(args);
 
