@@ -73,6 +73,7 @@ public class PythonScriptHandler {
         // Prepare the command: python <script> <args...>
     	
         List<String> command = new ArrayList<>();
+        
         if(!audio) {
         	command.add("python");
         }
